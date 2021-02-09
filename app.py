@@ -4,6 +4,8 @@ from flask import render_template
 from flask import request # for HTTP methods
 from flask import redirect
 from models import db
+from flask_wtf.csrf import CSRFProtect
+from forms import RegistrationForm
 
 from models import WebUser
 
@@ -11,25 +13,17 @@ app = Flask(__name__)
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
-    if request.method == 'POST':
-         #get data from form
-        userid = request.form.get('userid')
-        username = request.form.get('username')
-        password = request.form.get('password')
-        re_password = request.form.get('re-password')
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        webUser = WebUser()
+        webUser.userid = form.data.get('userid')
+        webUser.username = form.data.get('username')
+        webUser.password = form.data.get('password')
 
-        #validate: not null
-        if (userid and username and password and re_password) and password == re_password:
-            #Save data
-            webUser = WebUser()
-            webUser.userid = userid
-            webUser.username = username
-            webUser.password = password
-
-            db.session.add(webUser)
-            db.session.commit()
-            return redirect('/')
-    return render_template('registration.html')
+        db.session.add(webUser)
+        db.session.commit()
+        return redirect('/')
+    return render_template('registration.html', form=form)
 
 @app.route('/')
 def hello():
@@ -43,7 +37,9 @@ if __name__ == "__main__":
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + dbfile
     app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    app.config['SECRET_KEY'] = 'adlfkja;fladfa' #random String
    
+    csrf = CSRFProtect()
     db.init_app(app)
     db.app = app
     db.create_all()

@@ -23,21 +23,30 @@
     <div class="row mt-5">
       <div class="col-12">
         <form method="POST">
+          {{form.csrf_token}}
           <div class="form-group">
-            <label for="userid">User ID</label>
-            <input type="text" class="form-control" id="userid" placeholder="아이디" name="userid" />
+            <!--<label for="userid">User ID</label>
+            <input type="text" class="form-control" id="userid" placeholder="아이디" name="userid" /> -->
+            {{form.userid.label("UserId")}}
+            {{form.userid(class="form-control", placeholder = "ID")}}
           </div>
           <div class="form-group">
-            <label for="username">Username</label>
-            <input type="text" class="form-control" id="username" placeholder="사용자 이름" name="username" />
+            <!--<label for="username">Username</label>
+            <input type="text" class="form-control" id="username" placeholder="사용자 이름" name="username" /> -->
+            {{form.username.label("Username")}}
+            {{form.username(class="form-control", placeholder = "Username")}}
           </div>
           <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" class="form-control" id="password" placeholder="비밀번호" name="password" />
+            <!--<label for="password">Password</label>
+            <input type="password" class="form-control" id="password" placeholder="비밀번호" name="password" />  -->
+            {{form.password.label("Password")}}
+            {{form.password(class="form-control", placeholder = "Password")}}
           </div>
           <div class="form-group">
-            <label for="re-password">Re type Password</label>
-            <input type="password" class="form-control" id="re-password" placeholder="비밀번호 확인" name="re-password" />
+            <!--<label for="re-password">Re type Password</label>
+            <input type="password" class="form-control" id="re-password" placeholder="비밀번호 확인" name="re-password" />  -->
+            {{form.repassword.label("Reenter Password")}}
+            {{form.repassword(class="form-control", placeholder = "Reender Password")}}
           </div>
           <button type="submit" class="btn btn-primary">Register</button>
         </form>
