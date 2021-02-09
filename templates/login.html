@@ -19,7 +19,7 @@
 <body>
   <div class="container">
     <div class="row mt-5">
-      <h1>Registration</h1>
+      <h1>Login</h1>
     </div>
     <div class="row mt-5">
       <div class="col-12">
@@ -31,25 +31,18 @@
             {{form.userid.label("UserId")}}
             {{form.userid(class="form-control", placeholder = "ID")}}
           </div>
-          <div class="form-group">
-            <!--<label for="username">Username</label>
-            <input type="text" class="form-control" id="username" placeholder="사용자 이름" name="username" /> -->
-            {{form.username.label("Username")}}
-            {{form.username(class="form-control", placeholder = "Username")}}
-          </div>
+         
           <div class="form-group">
             <!--<label for="password">Password</label>
             <input type="password" class="form-control" id="password" placeholder="비밀번호" name="password" />  -->
             {{form.password.label("Password")}}
+            {% if form.password.errors %}
+            {{form.password.errors.0 }}
+            {% endif %}
             {{form.password(class="form-control", placeholder = "Password")}}
           </div>
-          <div class="form-group">
-            <!--<label for="re-password">Re type Password</label>
-            <input type="password" class="form-control" id="re-password" placeholder="비밀번호 확인" name="re-password" />  -->
-            {{form.repassword.label("Re-enter Password")}}
-            {{form.repassword(class="form-control", placeholder = "Re-enter Password")}}
-          </div>
-          <button type="submit" class="btn btn-primary">Register</button>
+          
+          <button type="submit" class="btn btn-primary">Login</button>
         </form>
       </div>
     </div>

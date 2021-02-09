@@ -2,14 +2,29 @@ import os
 from flask import Flask 
 from flask import render_template
 from flask import request # for HTTP methods
+from flask import session
 from flask import redirect
 from models import db
 from flask_wtf.csrf import CSRFProtect
-from forms import RegistrationForm
+from forms import RegistrationForm, LoginForm
 
 from models import WebUser
 
 app = Flask(__name__)
+
+@app.route('/logout', methods=['GET'])
+def logout():
+    session.pop('userid', None)
+    return redirect('/')
+
+@app.route('/login', methods=['GET','POST'])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        session['userid'] = form.data.get('userid')
+        return redirect('/')
+    return render_template('login.html', form = form)
+
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -27,7 +42,8 @@ def register():
 
 @app.route('/')
 def hello():
-    return render_template('hello.html')
+    userid = session.get('userid', None)
+    return render_template('hello.html', userid=userid)
 
 # 지금까지는 flask run으로 실행했다면, 이제 python으로 실행하도록 설정
 if __name__ == "__main__":

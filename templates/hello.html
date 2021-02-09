@@ -1,1 +1,7 @@
-Hello Flask
+
+
+{% if userid %} 
+Hello {{userid}} <a href="/logout">Logout</a> 
+{% else %}
+Hello <a href="/login">Login</a>  <a href="/register">Register</a>
+{% endif%}
